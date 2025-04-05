@@ -1,11 +1,108 @@
-<style>
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ユーザー登録</title>
+     <script
+      src="https://kit.fontawesome.com/d0a601627a.js"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://yubinbango.github.io/yubinbango/yubinbango.js"
+      charset="UTF-8"
+    ></script>
+    <link
+      href="https://use.fontawesome.com/releases/v5.6.1/css/all.css"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+          <h1>
+        <img
+          src="https://i.ibb.co/Wv8X3LVh/1.png"
+          alt="IMG-5451"
+          width="100px"
+          height="100px"
+        />
+        クールシェア宝塚2025<br />
+        スタンプラリーカード
+      </h1>
+
+        <script>
+            function getDistance(lat1,lon1,lat2,lon2){
+                const R = 6371
+                const dLat = (lat2-lat1) * Math.PI / 180;
+                const dLon = (lon2-lon1) * Math.PI / 180;
+                const a = 
+                    Math.sin(dLat/2) * Math.sin(dLat/2) +
+                    Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
+                    Math.sin(dLon/2) * Math.sin(dLon/2);
+                const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+                return R * c;        
+            }
+
+            let storeData = [];
+            fetch ("https://api.sheety.co/ce9e3a0218bcaf86020ff53bb918a57e/マップ/シート1")
+              .then(response => response.json())
+              .then(data => {
+                storeData = data.シート1.map(entry => ({
+                name: entry.name,
+                lat: parseFloat(entry.lat),
+                lon: parseFloat(entry.lon)
+              })); 
+                console.log(storeData);
+              });
+              
+
+        </script>
+        
+        <button onclick = "sortByDistance()">近い順に並び替える</button>
+        <ul id = "store-list"></ul>
+
+        <script>
+            function sortByDistance(){
+                navigator.geolocation.getCurrentPosition((position) => {
+                    const userLat = position.coords.latitude;
+                    const userLon = position.coords.longitude;                    
+                
+                
+                const sortedStores = storeData
+                    .map(store => ({
+                        ...store,
+                        distance: getDistance(userLat, userLon, store.lat, store.lon)
+                    }))
+                    .sort((a, b) => a.distance - b.distance);
+
+                const top10 = sortedStores.slice(0,10);
+                displayStores(top10);
+                  },
+
+                (error) => {
+                console.error("位置情報の取得に失敗しました:", error);
+                }
+            );
+            }
+
+            function displayStores(stores){
+                const list = document.getElementById("store-list");
+                list.innerHTML = "";
+                stores.forEach(store => {
+                    const li = document.createElement("li");
+                    li.textContent = `${store.name}(${store.distance.toFixed(2)}km)`;
+                    list.appendChild(li);
+                });
+            }
+
+        </script>
+
+              <style>
                 #map {
                   height: 400px;
                   width: 100%;
                 }
               </style>
-            </head>
-            <body>
+
               <h2>Google Maps テスト！</h2>
               <div id="map"></div>
           
@@ -55,3 +152,16 @@
               </script>
             </body>
           </html>
+          
+
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      
