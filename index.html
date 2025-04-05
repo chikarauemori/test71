@@ -67,19 +67,21 @@
                     const userLon = position.coords.longitude;                    
                 
                 
-                const sortedStores = stores
+                const sortedStores = storeData
                     .map(store => ({
                         ...store,
                         distance: getDistance(userLat, userLon, store.lat, store.lon)
                     }))
+                    .sort((a, b) => a.distance - b.distance);
 
                 const top10 = sortedStores.slice(0,10);
                 displayStores(top10);
+                  },
 
                 (error) => {
                 console.error("位置情報の取得に失敗しました:", error);
                 }
-            });
+            );
             }
 
             function displayStores(stores){
