@@ -46,15 +46,15 @@
             fetch ("https://api.sheety.co/ce9e3a0218bcaf86020ff53bb918a57e/マップ/シート1")
               .then(response => response.json())
               .then(data => {
-                storeData = data.シート1 
+                storeData = data.シート1.map(entry => ({
+                name: entry.name,
+                lat: parseFloat(entry.lat),
+                lon: parseFloat(entry.lon)
+              })); 
                 console.log(storeData);
               });
               
-              storeData = data.シート1.map(entry => ({
-              name: entry.name,
-              lat: parseFloat(entry.lat),
-              lon: parseFloat(entry.lon)
-              }));
+
         </script>
         
         <button onclick = "sortByDistance()">近い順に並び替える</button>
