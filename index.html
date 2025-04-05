@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ユーザー登録</title>
+     <script
+      src="https://kit.fontawesome.com/d0a601627a.js"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://yubinbango.github.io/yubinbango/yubinbango.js"
+      charset="UTF-8"
+    ></script>
+    <link
+      href="https://use.fontawesome.com/releases/v5.6.1/css/all.css"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+          <h1>
+        <img
+          src="https://i.ibb.co/Wv8X3LVh/1.png"
+          alt="IMG-5451"
+          width="100px"
+          height="100px"
+        />
+        クールシェア宝塚2025<br />
+        スタンプラリーカード
+      </h1>
+
+        <script>
+            function getDistance(lat1,lon1,lat2,lon2){
+                const R = 6371
+                const dLat = (lat2-lat1) * Math.PI / 180;
+                const dLon = (lon2-lon1) * Math.PI / 180;
+                const a = 
+                    Math.sin(dLat/2) * Math.sin(dLat/2) +
+                    Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
+                    Math.sin(dLon/2) * Math.sin(dLon/2);
+                const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+                return R * c;        
+            }
+
+            const stores = [
+                {name: "NewDays 新宿", lat: 35.6896, lon: 139.7006},
+                {name: "NewDays 池袋", lat: 35.7284, lon: 139.7101},
+            ]
+        </script>
+        <button onclick = "sortByDistance()">近い順に並び替える</button>
+        <ul id = "store-list"></ul>
+
+        <script>
+            function sortByDistance(){
+                navigator.geolocation.getCurrentPosition((position) => {
+                    const userLat = position.coords.latitude;
+                    const userLon = position.coords.longitude;                    
+                
+                
+                const sortedStores = stores
+                    .map(store => ({
+                        ...store,
+                        distance: getDistance(userLat, userLon, store.lat, store.lon)
+                    }))
+
+                const top10 = sortedStores.slice(0,10);
+                displayStores(top10);
+
+                (error) => {
+                console.error("位置情報の取得に失敗しました:", error);
+                }
+            });
+            }
+
+            function displayStores(stores){
+                const list = document.getElementById("store-list");
+                list.innerHTML = "";
+                stores.forEach(store => {
+                    const li = document.createElement("li");
+                    li.textContent = store.name;
+                    list.appendChild(li);
+                });
+            }
+
+        </script>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      
+
+
+
+
+
+ 
+ <nav>
+    <ui class="menu">
+      <li>
+        <a href="https://chikarauemori.github.io/test57/" target="_self"
+          ><i class="fa-solid fa-house"></i><br /><span class="iconname"
+            >ホーム</span
+          ></a
+        >
+      </li>
+      <li>
+        <a href="https://chikarauemori.github.io/test62/" target="_self"
+          ><i class="fa-solid fa-location-dot"></i><br /><span class="iconname"
+            >マップ</span
+          ></a
+        >
+      </li>
+      <li>
+        <a
+          href="
+        https://liff.line.me/2007108080-jR8JqOgX" target="_self"
+          ><i class="fa-solid fa-location-pin"></i><br /><span class="iconname"
+            >スタンプ獲得</span
+          ></a
+        >
+      </li>
+      <li>
+        <a href="https://chikarauemori.github.io/test60/" target="_self"
+          ><i class="fa-solid fa-circle-user"></i><br /><span class="iconname"
+            >マイページ</span
+          ></a
+        >
+      </li>
+  </nav>
+ 
+<style>
+      .menu {
+        position: fixed;
+        left: 0;
+        bottom: 0;
+        background: white;
+        width: 100%;
+        display: flex;
+        justify-content: space-around;
+        padding: 10px 0;
+        box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+      }
+
+      .menu li {
+        display: inline-block;
+        text-align: center;
+      }
+
+      .menu a {
+        text-decoration: none;
+        color: black;
+      }
+
+      .menu a i {
+        font-size: 24px;
+      }
+
+      .menu a span {
+        display: block;
+        font-size: 12px; /* テキストサイズ */
+        margin-top: 5px;
+      }
+
+      @media (max-width: 768px) {
+        .menu {
+          display: grid;
+          grid-template-columns: repeat(4, 1fr);
+        }
+
+        .menu li {
+          padding: 5px;
+        }
+      }
+
+          h1 {
+        font-family: sans-serif;
+        display: flex;
+        align-items: center; /* 縦方向の中央揃え */
+        justify-content: center; /* 横方向の中央揃え */
+        text-align: center;
+        background: skyblue;
+        padding-top: 10px;
+        padding-bottom: 10px;
+        padding-left: 10px;
+        font-size: 85%;
+      }
+
+      input {
+        font-size: 200%;
+        background: skyblue;
+        display: inline-block;
+      }
+
+      button {
+        font-size: 200%;
+        display: inline-block;
+      }
+      .information{
+        border-style: dotted;
+        display: inline-block;
+      }
+      </style>
+  </body>
+</html>
