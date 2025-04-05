@@ -42,11 +42,15 @@
                 return R * c;        
             }
 
-            const stores = [
-                {name: "NewDays 新宿", lat: 35.6896, lon: 139.7006},
-                {name: "NewDays 池袋", lat: 35.7284, lon: 139.7101},
-            ]
+            let storeData = [];
+            fetch ("https://api.sheety.co/ce9e3a0218bcaf86020ff53bb918a57e/マップ/シート1")
+              .then(response => response.json())
+              .then(data => {
+                console.log(storeData);
+              });
+              
         </script>
+        
         <button onclick = "sortByDistance()">近い順に並び替える</button>
         <ul id = "store-list"></ul>
 
@@ -77,7 +81,7 @@
                 list.innerHTML = "";
                 stores.forEach(store => {
                     const li = document.createElement("li");
-                    li.textContent = `${store.name}（${store.distance.toFixed(2)}km）`;
+                    li.textContent = store.name;
                     list.appendChild(li);
                 });
             }
