@@ -89,7 +89,7 @@
                 list.innerHTML = "";
                 stores.forEach(store => {
                     const li = document.createElement("li");
-                    li.textContent = store.name;
+                    li.textContent = `${store.name}($(store.distance.toFixed(2)}km);
                     list.appendChild(li);
                 });
             }
