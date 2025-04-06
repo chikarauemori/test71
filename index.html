@@ -92,7 +92,7 @@
                 list.innerHTML = "";
                 stores.forEach(store => {
                     const li = document.createElement("li");
-                    li.innerHTML = `<i class="fas fa-map-marker-alt"></i> ${store.name}（${store.distance.toFixed(2)}km）`;
+                    li.innerHTML = `<i class="fas fa-map-marker-alt store-icon"></i> ${store.name}（${store.distance.toFixed(2)}km）`;
                     list.appendChild(li);
                 });
             }
@@ -305,9 +305,12 @@
 
        }
 
-       .store-list li:before {
 
-       }
+
+        .store-icon {
+            color: crimson; /* 例：赤系。好きな色にしてOK！ */
+            margin-right: 6px;
+        }
   
       </style>
   </body>
