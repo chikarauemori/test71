@@ -83,9 +83,9 @@
             list.innerHTML = "";
             stores.forEach(store => {
                 const li = document.createElement("li");
-                li.innerHTML = ` ${store.name}<br><i class="fas fa-map-marker-alt store-icon"></i>（${store.distance.toFixed(2)}km）<br>
-                                ${store.open}<br>${store.businessHour}<br>${store.message}
-                                <a class=store-link href="https://www.google.com/maps/dir/?api=1&destination=${store.lat},${store.lon}">Googleマップへ</a><br>
+                li.innerHTML = ` ${store.name}<br><i class="fas fa-map-marker-alt store-icon"></i>${store.distance.toFixed(2)}km<br>
+                                ${store.open}<br>${store.businessHour}<br>${store.message}<br>
+                                <a target="_blank" class=store-link href="https://www.google.com/maps/dir/?api=1&destination=${store.lat},${store.lon}">Googleマップへ</a><br>
                                 `;
                 list.appendChild(li);
             });
@@ -93,6 +93,7 @@
     </script>
 
     <button onclick="sortByDistance()">近い順に並び替える</button><br>
+    <p>現在地から近い10個のスポットが表示されます！</p>
     <ul id="store-list" class="store-list">
 
     </ul>
@@ -237,18 +238,19 @@
         padding: 0;
        }
 
-    .store-list li {
+        .store-list li {
         background: #fff;
         border-left: solid 6px skyblue;
         border-radius: 12px;
         box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
         padding: 12px 16px;
         margin-bottom: 12px;
-        transition: transform 0.2s ease; 
+        transition: all 0.3 ease; 
     }
 
-    .store-list:hover{
-        transform: scale(1.02);
+    .store-list li:hover{
+        background: #f0f8ff;
+        box-shadow: 0 8 16px rgba(0, 0, 0, 0.2);
     }
 
     .store-icon {
