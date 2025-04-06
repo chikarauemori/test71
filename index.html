@@ -32,7 +32,7 @@
         スタンプラリーカード
     </h1>
 
- <script>
+    <script>
         function getDistance(lat1, lon1, lat2, lon2) {
             const R = 6371; // 地球の半径 (km)
             const dLat = (lat2 - lat1) * Math.PI / 180;
@@ -100,13 +100,54 @@
     <button onclick="sortByDistance()">近い順に並び替える</button><br>
     <ul id="store-list" class="store-list"></ul>
 
-        </ul>
     <h2>全体マップ</h2>
-        <iframe src="https://www.google.com/maps/d/embed?mid=1lAKW-p5WHlteCxdWoGo-LhpNrFhYkqM&ehbc=2E312F" width="640" height="480"></iframe><br>
-        
+    <iframe src="https://www.google.com/maps/d/embed?mid=1lAKW-p5WHlteCxdWoGo-LhpNrFhYkqM&ehbc=2E312F" width="640" height="480"></iframe><br>
 
-            </body>
-        </html>
+    <h2>Google Maps テスト！</h2>
+    <div id="map"></div>
+
+    <script>
+        let map;
+        function initMap() {
+            const center = { lat: 34.810314, lng: 135.341766 }; // 初期位置
+
+            map = new google.maps.Map(document.getElementById("map"), {
+                center: center,
+                zoom: 14,
+            });
+
+            fetch("https://api.sheety.co/ce9e3a0218bcaf86020ff53bb918a57e/マップ/シート1")
+                .then(response => response.json())
+                .then(data => {
+                    storeData = data.シート1.map(entry => ({
+                        name: entry.name,
+                        lat: parseFloat(entry.lat),
+                        lon: parseFloat(entry.lon)
+                    }));
+
+                    storeData.forEach(store => {
+                        const marker = new google.maps.Marker({
+                            position: { lat: store.lat, lng: store.lon },
+                            map: map,
+                            title: store.name
+                        });
+
+                        const infoWindow = new google.maps.InfoWindow({
+                            content: `<strong>${store.name}</strong>`
+                        });
+
+                        marker.addListener("click", () => {
+                            infoWindow.open(map, marker);
+                        });
+                    });
+                });
+        }
+    </script>
+
+    <!-- Google Maps APIキー -->
+    <script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBgMHwynQlm9iZrz3krFdn7XCFoAhJLA3o&callback=initMap">
+    </script>
         
 
     <br>
