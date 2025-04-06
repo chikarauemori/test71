@@ -15,7 +15,9 @@
     href="https://use.fontawesome.com/releases/v5.6.1/css/all.css"
     rel="stylesheet"
 />
-    <title>Document</title>
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
+    
+    <title>マップ</title>
 </head>
 <body>
     
@@ -42,20 +44,24 @@
                 const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
                 return R * c;        
             }
+let storeData = [];
 
-            let storeData = [];
-            fetch ("https://api.sheety.co/ce9e3a0218bcaf86020ff53bb918a57e/マップ/シート1")
-            .then(response => response.json())
-            .then(data => {
-                storeData = data.シート1.map(entry => ({
-                name: entry.name,
-                lat: parseFloat(entry.lat),
-                lon: parseFloat(entry.lon),
-                businessHour:entry.businessHour,
-                message:entry.message,
-            })); 
-                console.log(storeData);
-            });
+fetch('https://docs.google.com/spreadsheets/d/1AbcDefGhiJklMnOpQrStUvWxYz1234567890/gviz/tq?tqx=out:csv')
+    .then(response => response.text())  // CSVデータをテキスト形式で取得
+    .then(csvText => {
+        // CSVテキストをパースしてJSON形式に変換
+        const parsedData = Papa.parse(csvText, { header: true });
+        storeData = parsedData.data.map(entry => ({
+            name: entry.name,
+            lat: parseFloat(entry.lat),
+            lon: parseFloat(entry.lon),
+            businessHour: entry.businessHour,
+            message: entry.message
+        }));
+        console.log(storeData);  // storeDataの内容をコンソールに表示
+    })
+    .catch(error => console.error('Error fetching or parsing CSV data:', error));
+
             
 
         </script>
