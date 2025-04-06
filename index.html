@@ -96,7 +96,7 @@
                 list.innerHTML = "";
                 stores.forEach(store => {
                     const li = document.createElement("li");
-                    li.innerHTML = `<i class="fas fa-map-marker-alt store-icon"></i> ${store.name}（${store.distance.toFixed(2)}km）\n${businessHour}\n${message}`;
+                    li.innerHTML = `<i class="fas fa-map-marker-alt store-icon"></i> ${store.name}（${store.distance.toFixed(2)}km）\n${store.businessHour}\n${store.message}`;
                     list.appendChild(li);
                 });
             }
