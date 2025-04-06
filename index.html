@@ -49,7 +49,8 @@
                     lat: parseFloat(entry.lat),
                     lon: parseFloat(entry.lon),
                     businessHour: entry.businessHour,
-                    message: entry.message
+                    message: entry.message,
+                    open: entry.open
                 }));
                 console.log(storeData);  // storeDataの内容をコンソールに表示
             })
@@ -82,16 +83,19 @@
             list.innerHTML = "";
             stores.forEach(store => {
                 const li = document.createElement("li");
-                li.innerHTML = `<i class="fas fa-map-marker-alt store-icon"></i> ${store.name}（${store.distance.toFixed(2)}km）<br>
-                                <a href="https://www.google.com/maps/dir/?api=1&destination=${store.lat},${store.lon}">Googleマップへ</a><br>
-                                ${store.businessHour}<br>${store.message}`;
+                li.innerHTML = ` ${store.name}<br><i class="fas fa-map-marker-alt store-icon"></i>（${store.distance.toFixed(2)}km）<br>
+                                ${store.open}<br>${store.businessHour}<br>${store.message}
+                                <a class=store-link href="https://www.google.com/maps/dir/?api=1&destination=${store.lat},${store.lon}">Googleマップへ</a><br>
+                                `;
                 list.appendChild(li);
             });
         }
     </script>
 
     <button onclick="sortByDistance()">近い順に並び替える</button><br>
-    <ul id="store-list" class="store-list"></ul>
+    <ul id="store-list" class="store-list">
+
+    </ul>
 
     <h2>全体マップ</h2>
     <iframe src="https://www.google.com/maps/d/embed?mid=1lAKW-p5WHlteCxdWoGo-LhpNrFhYkqM&ehbc=2E312F" width="640" height="480"></iframe><br>
@@ -233,33 +237,36 @@
         padding: 0;
        }
 
-       .store-list li {
-        color: #404040;
+    .store-list li {
+        background: #fff;
         border-left: solid 6px skyblue;
-        border-bottom: solid 2px #dadada;
-        background: whitesmoke;
-        
-        margin: 10px Auto;
-        line-height: 1,5;
-        padding: 0.5em;
-        list-style-type: none!important;
-        font-weight:bold;
-        font-family: sans-serif;
-        
+        border-radius: 12px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        padding: 12px 16px;
+        margin-bottom: 12px;
+        transition: transform 0.2s ease; 
+    }
 
+    .store-list:hover{
+        transform: scale(1.02);
+    }
 
+    .store-icon {
+        color: tomato; 
+        margin-right: 6px;
+    }
 
+    .store-link {
+        display: inline-block;
+        margin-top: 6px;
+        color: #007bff;
+        text-decoration: none;
+        font-size:0.9em;
+    }
 
-       }
-
-
-
-        .store-icon {
-            color: tomato; 
-            margin-right: 6px;
-            
-
-        }
+    .store-link:hover {
+        text-decoration: underline;
+    }
   
       </style>
   </body>
