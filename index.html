@@ -50,7 +50,8 @@
                     lon: parseFloat(entry.lon),
                     businessHour: entry.businessHour,
                     message: entry.message,
-                    open: entry.open
+                    open: entry.open,
+                    area: entry.area
                 }));
                 console.log(storeData);  // storeDataの内容をコンソールに表示
             })
@@ -63,6 +64,35 @@
                     const userLon = position.coords.longitude;
 
                     const sortedStores = storeData
+                        .map(store => ({
+                            ...store,
+                            distance: getDistance(userLat, userLon, store.lat, store.lon)
+                        }))
+                        .sort((a, b) => a.distance - b.distance);
+
+                    const top10 = sortedStores.slice(0, 10);
+                    displayStores(top10);
+                },
+                (error) => {
+                    console.error("位置情報の取得に失敗しました:", error);
+                }
+            );
+        }
+
+        function filterByArea(){
+            const selectdArea = document.getElementById("area-filter").value;
+
+            const filterdStores = selectedArea
+            
+            ? storeData.filter(store => store.area === selectedArea)
+            : storeData;
+
+            navigator.geolocation.getCurrentPosition(
+                (position) => {
+                    const userLat = position.coords.latitude;
+                    const userLon = position.coords.longitude;
+
+                    const sortedStores = fileterdStores
                         .map(store => ({
                             ...store,
                             distance: getDistance(userLat, userLon, store.lat, store.lon)
@@ -92,8 +122,39 @@
         }
     </script>
 
-    <button onclick="sortByDistance()">近い順に並び替える</button><br>
+<h2>◉地区ごとに並び替える：<br>
+<select id="area-filter" onchange="filterByArea()">
+    <option value="">全て表示</option>
+    <option value="光明">光明</option>
+    <option value="高司">高司</option>
+    <option value="仁川">仁川</option>
+    <option value="末成">末成</option>
+    <option value="良元">良元</option>
+    <option value="宝塚第一">宝塚第一</option>
+    <option value="末広">末広</option>
+    <option value="逆瀬台">逆瀬台</option>
+    <option value="西山">西山</option>
+    <option value="すみれ台">すみれ台</option>
+    <option value="売布">売布</option>
+    <option value="宝塚">宝塚</option>
+    <option value="安倉">安倉</option>
+    <option value="安倉北">安倉北</option>
+    <option value="小浜">小浜</option>
+    <option value="美座">美座</option>
+    <option value="丸橋">丸橋</option>
+    <option value="長尾">長尾</option>
+    <option value="長尾南">長尾南</option>
+    <option value="山手台">山手台</option>
+    <option value="中山台">中山台</option>
+    <option value="長尾台">長尾台</option>
+    <option value="西谷">西谷</option>
+
+
+</select></h2>
+    <h2>◉近い順に並び替える：</h2>
+    <button onclick="sortByDistance()">ここをタップ！！</button><br>
     <p>現在地から近い10個のスポットが表示されます！</p>
+    
     <ul id="store-list" class="store-list">
 
     </ul>
