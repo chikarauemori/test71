@@ -80,7 +80,7 @@
         }
 
         function filterByArea(){
-            const selectdArea = document.getElementById("area-filter").value;
+            const selectedArea = document.getElementById("area-filter").value;
 
             const filterdStores = selectedArea
             
@@ -92,7 +92,7 @@
                     const userLat = position.coords.latitude;
                     const userLon = position.coords.longitude;
 
-                    const sortedStores = fileterdStores
+                    const sortedStores = filterdStores
                         .map(store => ({
                             ...store,
                             distance: getDistance(userLat, userLon, store.lat, store.lon)
